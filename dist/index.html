@@ -9,8 +9,32 @@
     <title>2do</title>
 </head>
 <body>
+    <div id='containerForm' class='hideMe'>
+        <form id='form'>
+            <div class='row formRow'>
+                <div class="six columns">
+                    <label for="titleInput">Title</label>
+                    <input class="u-full-width" type="text" placeholder="Study French" id="titleInput">
+                </div>
+                <div class="six columns">
+                    <label for="priorityInput">Priority</label>
+                    <select class="u-full-width" id="priorityInput">
+                        <option value="0">I'll get to it eventually..</option>
+                        <option value="1">I really should be doing this right now</option>
+                        <option value="2">THE WORLD WILL END IF I DON'T START NOW</option>
+                    </select> 
+                </div>
+            </div>
+              
+            <label for='descriptionInput'>Extra info</label>
+            <textarea id='descriptionInput' class="u-full-width" placeholder='Read chapters 2 and 3, do Anki and watch 1 hour of X series with french subs'></textarea>
+            <input id='submitBtn' class="button-primary" type="submit" value="Submit">
+        </form>
+    </div>
     <div class='container'>
-        <header class='row'><h1>ToDo List</h1></header>
+        <header class='row'>
+            <h1>ToDo List</h1>
+        </header>
 
         <div class='row'>
             <h2>Projects</h2>
@@ -21,8 +45,25 @@
         </div>
     
         <main class='row'>
-            <div id='todosList'>
+            <div id='todosContainer'>
                 <div class="todo">Hi im a todo</div>
+                <div class="todo">Hi im a todo</div>
+                <div class="todo">Hi im a todo</div>
+                <div class="todo">Hi im a todo</div>
+                <div class="todo">Hi im a todo</div>
+                <div class="todo">Hi im a todo</div>
+                <div class="todo">Hi im a todo</div>
+                <div class="todo">Hi im a todo</div>
+                <div class="todo">Hi im a todo</div>
+                <div class="todo">Hi im a todo</div>
+                <div class="todo">Hi im a todo</div>
+                <div class="todo">Hi im a todo</div>
+                <div class="todo">Hi im a todo</div>
+                <div class="todo">Hi im a todo</div>
+                <div class="todo">Hi im a todo</div>
+                <div class="todo">Hi im a todo</div>
+                <div class="todo">Hi im a todo</div>
+
             </div>
             <div id='newTodoBtnDiv'>
                 <button id='newTodoBtn'>New Todo</button>
