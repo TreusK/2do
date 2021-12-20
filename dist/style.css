@@ -17,20 +17,16 @@ header {
 
 main {
     min-height: 300px;
-    width: 95%;
+    width: 90%;
     margin: 0 auto;
     border: solid 2px black;
     border-left: none;
     border-right: none;
-    background-color: rgb(212, 212, 211);
+    background-color: azure;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 0 20px;
-}
-
-#todosContainer {
-    flex: 10;
 }
 
 #newTodoBtnDiv {
@@ -96,12 +92,59 @@ textarea {
 }
 
 
+/*////////// Todo styles //////////*/
 
-
-
-.todo {
-    border-bottom: solid 2px black;
-    background-color: lightgray;
+#todosContainer {
+    flex: 10;
 }
 
+.todo {
+    margin-top: 10px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: solid 2px black;
+    border-radius: 2px;
+    background-color: azure;
+}
 
+.todo:hover {
+    border-left: 2px rgb(0, 140, 255) solid;
+    border-bottom: 2px rgb(0, 140, 255) solid;
+    padding: 5px 5px 5px 3px;
+}
+
+.todoCheckbox{
+     width: 20px;
+     height: 20px;
+     border: solid 1px black;
+     border-radius: 3px;
+     background-color: rgb(241, 241, 241);
+}
+
+.todoTitle {
+    flex: 7;
+    margin-left: 10px;
+}
+
+.todoDueDate {
+    flex: 3;
+}
+
+.todoPriority {
+    border: solid 1px black;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    align-self: center;
+}
+
+.level0{
+    background-color: lightgreen;
+}
+.level1 {
+    background-color: lightyellow;
+}
+.level2 {
+    background-color: lightsalmon;
+}

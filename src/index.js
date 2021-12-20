@@ -19,7 +19,11 @@ const todoMaker = (() => {
     function objToHtml(obj) {
         let todo = document.createElement('div');
         todo.classList.add('todo');
-        todo.innerHTML = `<span>${obj.title}</span> <span>${obj.dueDate}</span> <span>${obj.priority}</span>`;
+
+        todo.innerHTML =   `<div class='todoCheckbox'></div>
+                            <div class='todoTitle'>${obj.title}</div> 
+                            <div class='todoDueDate'>${obj.dueDate}</div>
+                            <div class='todoPriority level${obj.priority}'></div>`;
         return todo;
     }
 
@@ -75,8 +79,9 @@ form.addEventListener('submit', (e) => {
     e.preventDefault();
     let elements = e.target.elements;
     let todoObj = formModule.formToObj(elements);
-
-    arrOfTodos.push(todoObj)
+    arrOfTodos.push(todoObj);
+    
+    todoMaker.reset();
     todoMaker.renderArr();
     containerForm.classList.remove('showMe');
     form.reset();
