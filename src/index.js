@@ -8,21 +8,11 @@ let form = document.querySelector('#form');
 let arrOfTodos = [];
 
 
-//ToDo module
+///////ToDo module
 const todoMaker = (() => {
-    //Private function to render entire content
-    function render(parent, elem) {
-        parent.innerHTML = elem;
-    }
-
     //Function to empty the todos container
     function reset() {
-        render(todosContainer, '');
-    }
-
-    //Private function to take the form and return a todo object
-    function formToObj() {
-
+        todosContainer.innerHTML = '';
     }
 
     //Private function to take an object and return an html todo element
@@ -41,35 +31,57 @@ const todoMaker = (() => {
     return {reset, renderArr}
 })();
 
-//Form module
+///////Form module
 const formModule = (() => {
-    function hi() {
-        console.log('hi');
+    //Function to take the form and return a todo object
+    function formToObj(formElements) {
+        let title = formElements[0].value;
+        let dueDate = formElements[1].value;
+        let priority = formElements[2].value;
+        let description = formElements[3].value;
+
+        return {title, dueDate, priority, description}
     }
-    return {hi}
+
+    //Function to hide the form
+    function hideForm() {
+        containerForm.classList.remove('showMe');
+    }
+
+    //Function to show the form 
+    function showForm() {
+        containerForm.classList.add('showMe')
+    }
+
+    return {formToObj, hideForm, showForm}
 })();
 
-/////Events
+
+
+///////////Events///////////
 
 //Event to add visibility of the form container
-newTodoBtn.addEventListener('click', (e) => containerForm.classList.add('showMe'));
+newTodoBtn.addEventListener('click', (e) => formModule.showForm());
 
-//Event to stop displaying the form container
+//Event to stop displaying the form container when clicking outside of it
 containerForm.addEventListener('click', (e) => {
     if(e.target.id == 'containerForm') {
-        containerForm.classList.remove('showMe');
+        formModule.hideForm();
     }
 });
 
 //Event on form submit
 form.addEventListener('submit', (e) => {
     e.preventDefault();
-    console.log(e.target);
-    //I could grab the e.target.childrn elements I guess
+    let elements = e.target.elements;
+    let todoObj = formModule.formToObj(elements);
 
-    //Also there is a reset method already available
-    //form.reset();
+    arrOfTodos.push(todoObj)
+    todoMaker.renderArr();
+    containerForm.classList.remove('showMe');
+    form.reset();
 })
+
 
 
 
