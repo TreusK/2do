@@ -20,10 +20,8 @@ const todoMaker = (() => {
         let todo = document.createElement('div');
         todo.classList.add('todo');
 
-        todo.innerHTML =   `<div class='todoCheckbox'></div>
-                            <div class='todoTitle'>${obj.title}</div> 
-                            <div class='todoDueDate'>${obj.dueDate}</div>
-                            <div class='todoPriority level${obj.priority}'></div>`;
+        todo.innerHTML =   `<div class='todoCheckbox level${obj.priority}'></div>
+                            <div class='todoTitle'>${obj.title}</div>`;
         return todo;
     }
 
@@ -38,13 +36,11 @@ const todoMaker = (() => {
 ///////Form module
 const formModule = (() => {
     //Function to take the form and return a todo object
-    function formToObj(formElements) {
+    function formToObj(formElements, checkedRadio) {
         let title = formElements[0].value;
-        let dueDate = formElements[1].value;
-        let priority = formElements[2].value;
-        let description = formElements[3].value;
-
-        return {title, dueDate, priority, description}
+        let description = formElements[1].value;
+        let priority = checkedRadio.value;
+        return {title, description, priority}
     }
 
     //Function to hide the form
@@ -78,7 +74,8 @@ containerForm.addEventListener('click', (e) => {
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     let elements = e.target.elements;
-    let todoObj = formModule.formToObj(elements);
+    let checkedRadio = document.querySelector(`input[type='radio']:checked`);;
+    let todoObj = formModule.formToObj(elements, checkedRadio);
     arrOfTodos.push(todoObj);
     
     todoMaker.reset();

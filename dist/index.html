@@ -16,21 +16,6 @@
                 <label for="titleInput">Title</label>
                 <input class="u-full-width" type="text" placeholder="Study French" id="titleInput">
             </div>
-
-            <div class='row formRow'>
-                <div class='six columns'>
-                    <label for="dateInput">DueDate</label>
-                    <input type='date' id='dateInput'>
-                </div>
-                <div class="six columns">
-                    <label for="priorityInput">Priority</label>
-                    <select class="u-full-width" id="priorityInput">
-                        <option value="0">Low</option>
-                        <option value="1">Normal</option>
-                        <option value="2">Urgent</option>
-                    </select> 
-                </div>
-            </div>
               
             <div class='row'>
                 <label for='descriptionInput'>Extra info</label>
@@ -38,10 +23,26 @@
                     placeholder='Read chapters 2 and 3, do Anki and watch 1 hour of X series with french subs'></textarea>
             </div>
             
+            <label>Priority</label>
+            <div class='row formRow'>
+                <div>
+                    <input id='lowRadio' name='priority' value='low' type="radio" checked>
+                    <label class='button' for='lowRadio'>LOW</label>
+                </div>
+                <div>
+                    <input id='normalRadio' name='priority' value='normal' type="radio">
+                    <label class='button' for='normalRadio'>NORMAL</label>
+                </div>
+                <div>
+                    <input id='urgentRadio' name='priority' value='urgent' type="radio">
+                    <label class='button' for='urgentRadio'>URGENT</label>
+                </div>                 
+            </div>
+
             <div class='row'>
                 <input id='submitBtn' class="button-primary" type="submit" value="Submit">
             </div>
-            
+
         </form>
     </div>
     <div class='container'>
@@ -60,10 +61,8 @@
         <main class='row'>
             <div id='todosContainer'>
                 <div class="todo">
-                    <div class='todoCheckbox'></div>
-                    <div class='todoTitle'>Study french</div> 
-                    <div class='todoDueDate'>2021-12-24</div>
-                    <div class='todoPriority level0'></div>
+                    <div class='todoCheckbox level0'></div>
+                    <div class='todoTitle'>Example todo</div>  
                 </div>
              
 
