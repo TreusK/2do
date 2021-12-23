@@ -125,6 +125,7 @@ textarea {
     border-bottom: solid 2px black;
     border-radius: 2px;
     background-color: #FEFCF2;
+    user-select: none;
 }
 
 .todo:hover {
