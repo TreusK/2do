@@ -34,9 +34,15 @@ let arrOfTodos = [defObj, defObj2, defObj3];
 //General function to create html elements
 function elemMaker(elemToCreate, attribute, eventFunc, extraObj) {
     let elem = document.createElement(elemToCreate);
-    (elemToCreate == 'div') 
-        ? elem.classList.add(attribute)
-        : elem.src = attribute;
+    //Elem type being div or img or p
+    if(elemToCreate == 'div') {
+        elem.classList.add(attribute);
+    } else if(elemToCreate == 'img') {
+        elem.src = attribute;
+    } else if(elemToCreate == 'p') {
+        elem.textContent = attribute;
+    }
+    //Attribute being the checkbox or title
     if(attribute == 'todoCheckbox') {
         let lvl = extraObj.priority;
         elem.classList.add('level'+lvl);
@@ -44,10 +50,11 @@ function elemMaker(elemToCreate, attribute, eventFunc, extraObj) {
     if(attribute == 'todoTitle') {
         elem.textContent = extraObj.title;
     }
-    //Return early for the todo since it doesn't need an event
-    if(attribute == 'todo') {
+    //Return early for these since they don't need an event
+    if(attribute == 'todo' || attribute == 'todoTop' || attribute == 'todoBottom') {
         return elem;
     }
+
     elem.addEventListener('click', eventFunc);
     return elem;
 }
@@ -70,12 +77,20 @@ const todoMaker = (() => {
     }
 
     //Private event function to show the description/extra info of a todo on click
-    function showInfoFunc() {
-        console.log('showin info');
+    function showInfoFunc(e) {
+        let todoTop = e.target.parentElement;
+        let todoBottom = todoTop.nextElementSibling;
+        todoBottom.classList.toggle('todoBottomShow');
+    }
+
+    //Private event function to hide the description/extra info of a todo on click
+    function hideInfoFunc(e) {
+        let todoBottom = e.target.parentElement;
+        todoBottom.classList.toggle('todoBottomShow');
     }
 
     //Private event function for the checkbox
-    function checkboxFunc() {
+    function checkboxFunc(e) {
         console.log('checkbox shit')
     }
 
@@ -83,15 +98,24 @@ const todoMaker = (() => {
     function objToHtml(obj) {
         let todo = elemMaker('div', 'todo');
 
+        let todoTop = elemMaker('div', 'todoTop');
+        let todoBottom = elemMaker('div', 'todoBottom');
+
         let todoCheckbox = elemMaker('div', 'todoCheckbox', checkboxFunc, obj);
         let todoTitle = elemMaker('div', 'todoTitle', showInfoFunc, obj);
         let deleteImage = elemMaker('img', deleteIcon, deleteFunc);
         let editImage = elemMaker('img', editIcon, editFunc);
+        let description = elemMaker('p', obj.description, hideInfoFunc);
 
-        todo.append(todoCheckbox);
-        todo.append(todoTitle);
-        todo.append(editImage);
-        todo.append(deleteImage);
+        todoTop.append(todoCheckbox);
+        todoTop.append(todoTitle);
+        todoTop.append(editImage);
+        todoTop.append(deleteImage);
+        todoBottom.append(description);
+
+        todo.append(todoTop);
+        todo.append(todoBottom);
+
         return todo;
     }
 

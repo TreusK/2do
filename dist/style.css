@@ -120,12 +120,23 @@ textarea {
 .todo {
     margin-top: 10px;
     padding: 5px;
-    display: flex;
-    justify-content: space-between;
     border-bottom: solid 2px black;
     border-radius: 2px;
     background-color: #FEFCF2;
     user-select: none;
+}
+
+.todoTop {
+    display: flex;
+    justify-content: space-between;
+}
+
+.todoBottom {
+    display: none;
+}
+
+.todoBottomShow {
+    display: block;
 }
 
 .todo:hover {
