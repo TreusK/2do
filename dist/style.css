@@ -29,6 +29,10 @@ main {
     padding: 0 20px;
 }
 
+main p {
+    margin: 0;
+}
+
 #newTodoBtnDiv {
     display: flex;
     flex-direction: column;
@@ -150,6 +154,7 @@ textarea {
      height: 20px;
      border: solid 2px;
      border-radius: 3px;
+     text-align: center;
 }
 
 .todoTitle {
@@ -172,10 +177,13 @@ textarea {
 
 .levellow{
     border-color: #2FBD74;
+    color: #2FBD74;
 }
 .levelnormal {
     border-color: #F9C253;
+    color: #F9C253;
 }
 .levelurgent {
     border-color: #FE8563;
+    color: #FE8563;
 }

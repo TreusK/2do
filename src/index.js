@@ -3,7 +3,13 @@ let todosContainer = document.querySelector('#todosContainer');
 let containerForm = document.querySelector('#containerForm');
 let newTodoBtn = document.querySelector('#newTodoBtn');
 let newProjectBtn = document.querySelector('#newProjectBtn');
+
 let form = document.querySelector('#form');
+let titleInput = document.querySelector('#titleInput');
+let descriptionInput = document.querySelector('#descriptionInput');
+let lowRadio = document.querySelector('#lowRadio');
+let normalRadio = document.querySelector('#normalRadio');
+let urgentRadio = document.querySelector('#urgentRadio');
 
 //Import icons
 import deleteIcon from './modules/delete.png';
@@ -16,20 +22,25 @@ let defObj = {
     description: "Anki and shit",
     priority: "normal",
     title: "Study Japanese",
+    checked: false,
 }
 let defObj2 = {
     description: "Tomato egg salad, 10/10",
     priority: "low",
     title: "Eat veggies",
+    checked: true,
 }
 let defObj3 = {
     description: "Get the axe, sharpen it and let Bibi know I'll be back tomorrow",
     priority: "urgent",
     title: "Kill that bear",
+    checked: false,
 }
 
-
+//Global variables
 let arrOfTodos = [defObj, defObj2, defObj3];
+let editIndex = -1;
+let checkedValue = true;
 
 //General function to create html elements
 function elemMaker(elemToCreate, attribute, eventFunc, extraObj) {
@@ -68,12 +79,33 @@ const todoMaker = (() => {
 
     //Private event function to Edit a todo
     function editFunc(e) {
-        console.log('editin');
+        form.classList.add('editing');
+        formModule.showForm();
+        let indexAsString = e.target.parentElement.parentElement.id;
+        let indexAsNumber = indexAsString.slice(5);
+        //Take the index out to be used in the submit event form when editing
+        editIndex = indexAsNumber;
+        //And also the checked for the checkBox value
+        checkedValue = arrOfTodos[indexAsNumber].checked;
+        titleInput.value = arrOfTodos[indexAsNumber].title;
+        descriptionInput.value = arrOfTodos[indexAsNumber].description;
+        switch(arrOfTodos[indexAsNumber].priority) {
+            case 'normal': normalRadio.checked = true;
+            break;
+            case 'urgent': urgentRadio.checked = true;
+            break;
+            default: lowRadio.checked = true;
+            break;
+        };
     }
 
     //Private event function to Delete a todo
     function deleteFunc(e) {
-        console.log('deletin')
+        let indexAsString = e.target.parentElement.parentElement.id;
+        let indexAsNumber = indexAsString.slice(5);
+        arrOfTodos.splice(indexAsNumber, 1);
+        reset();
+        renderArr();
     }
 
     //Private event function to show the description/extra info of a todo on click
@@ -91,11 +123,17 @@ const todoMaker = (() => {
 
     //Private event function for the checkbox
     function checkboxFunc(e) {
-        console.log('checkbox shit')
+        let indexAsString = e.target.parentElement.parentElement.id;
+        let indexAsNumber = +indexAsString.slice(5);
+        (arrOfTodos[indexAsNumber].checked)
+            ? arrOfTodos[indexAsNumber].checked = false
+            : arrOfTodos[indexAsNumber].checked = true;
+        reset()
+        renderArr();
     }
 
     //Private function to take an object and return a complete html todo element
-    function objToHtml(obj) {
+    function objToHtml(obj, index) {
         let todo = elemMaker('div', 'todo');
 
         let todoTop = elemMaker('div', 'todoTop');
@@ -107,6 +145,11 @@ const todoMaker = (() => {
         let editImage = elemMaker('img', editIcon, editFunc);
         let description = elemMaker('p', obj.description, hideInfoFunc);
 
+        if(obj.checked) {
+            todoCheckbox.textContent = 'X';
+            todoTitle.style.textDecoration = 'line-through';
+        }
+
         todoTop.append(todoCheckbox);
         todoTop.append(todoTitle);
         todoTop.append(editImage);
@@ -116,12 +159,13 @@ const todoMaker = (() => {
         todo.append(todoTop);
         todo.append(todoBottom);
 
+        todo.id = 'index' + index;
         return todo;
     }
 
     //Function to render the arrOfTodos
     function renderArr() {
-        arrOfTodos.map(elem => todosContainer.append(objToHtml(elem)));
+        arrOfTodos.map((elem, index) => todosContainer.append(objToHtml(elem, index)));
     }
 
     return {reset, renderArr}
@@ -134,7 +178,8 @@ const formModule = (() => {
         let title = formElements[0].value;
         let description = formElements[1].value;
         let priority = checkedRadio.value;
-        return {title, description, priority}
+        let checked = false;
+        return {title, description, priority, checked}
     }
 
     //Function to hide the form
@@ -157,7 +202,7 @@ const formModule = (() => {
 //Event to add visibility of the form container
 newTodoBtn.addEventListener('click', (e) => formModule.showForm());
 
-//Event to stop displaying the form container when clicking outside of it
+//Event to stop displaying the form container when clicking outside of the form
 containerForm.addEventListener('click', (e) => {
     if(e.target.id == 'containerForm') {
         formModule.hideForm();
@@ -168,14 +213,18 @@ containerForm.addEventListener('click', (e) => {
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     let elements = e.target.elements;
-    let checkedRadio = document.querySelector(`input[type='radio']:checked`);;
+    let checkedRadio = document.querySelector(`input[type='radio']:checked`);
     let todoObj = formModule.formToObj(elements, checkedRadio);
-    arrOfTodos.push(todoObj);
-    console.log(arrOfTodos);
-    
+    if(e.target.classList[0] == 'editing') {
+        todoObj.checked = checkedValue;
+        arrOfTodos.splice(editIndex, 1, todoObj);
+        e.target.classList.remove('editing'); 
+    } else {
+        arrOfTodos.push(todoObj);
+    }
     todoMaker.reset();
     todoMaker.renderArr();
-    containerForm.classList.remove('showMe');
+    formModule.hideForm();
     form.reset();
 })
 
