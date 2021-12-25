@@ -1,9 +1,20 @@
+@font-face {
+    font-family: JosefinSans;
+    src: url('../src/modules/JosefinSans.ttf');
+}
+
+@font-face {
+    font-family: JosefinSans-R;
+    src: url('../src/modules/JosefinSans-Regular.ttf');
+}
+
 body {
     margin: 0;
     padding: 0;
     background-color: #FFFFFF;
     box-sizing: border-box;
     min-width: 400px;
+    font-family: JosefinSans-R, Arial, Helvetica, sans-serif;
 }
 
 header {
@@ -143,6 +154,10 @@ textarea {
     display: block;
 }
 
+.todoBottom p {
+    word-break: break-all;
+}
+
 .todo:hover {
     border-left: 2px rgb(0, 140, 255) solid;
     border-bottom: 2px rgb(0, 140, 255) solid;
@@ -150,6 +165,7 @@ textarea {
 }
 
 .todoCheckbox{
+    font-family: JosefinSans-R;
      width: 20px;
      height: 20px;
      border: solid 2px;
@@ -186,4 +202,48 @@ textarea {
 .levelurgent {
     border-color: #FE8563;
     color: #FE8563;
+}
+
+/*////////// Project styles //////////*/
+
+#projectsContainer {
+    display: flex;
+}
+
+.projectBtn {
+    position: relative;
+    user-select: none;
+    font-size: 1.30em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 20px;
+    border-radius: 3px;
+    padding: 0 5px;
+}
+
+.projectBtn:hover {
+    color: rgb(0, 140, 255);
+}
+
+.projectBtn:before {
+    content : "";
+    position: absolute;
+    left    : 25%;
+    bottom  : 0;
+    height  : 1px;
+    width   : 50%;  /* or 100px */
+    border-bottom: 2px solid black;
+}
+
+.projectBtn:hover::before {
+    border-color: rgb(0, 140, 255);
+}
+
+.projectsH3 {
+    margin: 0;
+}
+
+#newProjectInput {
+    margin-bottom: 9px;
 }

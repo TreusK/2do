@@ -14,13 +14,12 @@
 
             <div class='row'>
                 <label for="titleInput">Title</label>
-                <input class="u-full-width" type="text" placeholder="Study French" id="titleInput" autocomplete='off' required>
+                <input class="u-full-width" type="text" placeholder="Do stuff" id="titleInput" autocomplete='off' required>
             </div>
               
             <div class='row'>
                 <label for='descriptionInput'>Extra info</label>
-                <textarea id='descriptionInput' class="u-full-width" 
-                    placeholder='Read chapters 2 and 3, do Anki and watch 1 hour of X series with french subs'></textarea>
+                <textarea id='descriptionInput' class="u-full-width"></textarea>
             </div>
             
             <label>Priority</label>
@@ -51,11 +50,13 @@
         </header>
 
         <div class='row'>
-            <h2>Projects</h2>
-            <div id='projectsList'>
-              <h4>-Default</h4>
+            <h3 class='projectsH3'>Projects</h3>
+            <div id='projectsContainer'>
             </div>
-            <button id='newProjectBtn'>New Project</button>
+            <div id='newProjectBtnAndInput'>
+                <button id='newProjectBtn'>New Project</button>
+                <input type="text" id='newProjectInput' class='hideMe' placeholder='Name of Project' maxlength="17">
+            </div> 
         </div>
     
         <main class='row'>

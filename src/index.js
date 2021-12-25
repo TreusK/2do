@@ -2,7 +2,10 @@
 let todosContainer = document.querySelector('#todosContainer');
 let containerForm = document.querySelector('#containerForm');
 let newTodoBtn = document.querySelector('#newTodoBtn');
+
 let newProjectBtn = document.querySelector('#newProjectBtn');
+let newProjectInput = document.querySelector('#newProjectInput');
+let projectsContainer = document.querySelector('#projectsContainer');
 
 let form = document.querySelector('#form');
 let titleInput = document.querySelector('#titleInput');
@@ -16,6 +19,9 @@ import deleteIcon from './modules/delete.png';
 import editIcon from './modules/edit.png';
 
 
+function sayHi() {
+    console.log('hi');
+}
 
 //Test default object for now
 let defObj = {
@@ -39,6 +45,7 @@ let defObj3 = {
 
 //Global variables
 let arrOfTodos = [defObj, defObj2, defObj3];
+let arrOfProjects = ['Default', 'Personal', 'Family'];
 let editIndex = -1;
 let checkedValue = true;
 
@@ -60,6 +67,9 @@ function elemMaker(elemToCreate, attribute, eventFunc, extraObj) {
     }
     if(attribute == 'todoTitle') {
         elem.textContent = extraObj.title;
+    }
+    if(attribute == 'projectBtn') {
+        elem.textContent = '.' + extraObj;
     }
     //Return early for these since they don't need an event
     if(attribute == 'todo' || attribute == 'todoTop' || attribute == 'todoBottom') {
@@ -195,6 +205,50 @@ const formModule = (() => {
     return {formToObj, hideForm, showForm}
 })();
 
+///////Project module
+const projectMaker = (() =>{
+    //Event function for the new project button on click
+    function newProjectBtnClick() {
+        newProjectInput.classList.toggle('hideMe');
+        newProjectInput.focus();
+    }
+
+    //Event function for the new project input on enter
+    function newProjectInputEnter(e) {
+        let key = e.key;
+        if(key == 'Enter') {
+            let name = newProjectInput.value;
+            if(arrOfProjects.includes(name)) {
+                alert('That name is already in use')
+            } else {
+                arrOfProjects.push(name);
+                reset();
+                renderArr();
+                newProjectInput.classList.toggle('hideMe');
+                newProjectInput.value = ''; 
+            }
+        }
+    }
+
+    //Function to take a string and return a project element
+    function strToHtml(str, index) {
+        let projectBtn = elemMaker('div', 'projectBtn', sayHi, str);
+        return projectBtn;
+    }
+
+    //Function to empty the projects container
+    function reset() {
+        projectsContainer.innerHTML = '';
+    }
+
+    //Function to render the arrOfProjects
+    function renderArr() {
+        arrOfProjects.map(elem => projectsContainer.append(strToHtml(elem)));
+    }
+
+    return {newProjectBtnClick, newProjectInputEnter, renderArr, reset}
+})();
+
 
 
 ///////////Events///////////
@@ -228,7 +282,14 @@ form.addEventListener('submit', (e) => {
     form.reset();
 })
 
+//Event for the new project button
+newProjectBtn.addEventListener('click', projectMaker.newProjectBtnClick);
+
+//Event for the new project input
+newProjectInput.addEventListener('keydown', projectMaker.newProjectInputEnter);
+
 todoMaker.renderArr();
+projectMaker.renderArr();
 
 
 
