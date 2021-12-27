@@ -1,11 +1,11 @@
 @font-face {
     font-family: JosefinSans;
-    src: url('../src/modules/JosefinSans.ttf');
+    src: url('/../src/modules/JosefinSans.ttf');
 }
 
 @font-face {
     font-family: JosefinSans-R;
-    src: url('../src/modules/JosefinSans-Regular.ttf');
+    src: url('/../src/modules/JosefinSans-Regular.ttf');
 }
 
 body {
