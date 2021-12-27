@@ -143,6 +143,9 @@ textarea {
     background-color: #FEFCF2;
     user-select: none;
 }
+.todo img {
+    max-height: 24px; 
+}
 
 .todoTop {
     display: flex;
