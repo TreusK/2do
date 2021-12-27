@@ -5,6 +5,7 @@ let newTodoBtn = document.querySelector('#newTodoBtn');
 
 let newProjectBtn = document.querySelector('#newProjectBtn');
 let newProjectInput = document.querySelector('#newProjectInput');
+let deleteCurrentProject = document.querySelector('#deleteCurrentProject');
 let projectsContainer = document.querySelector('#projectsContainer');
 
 let form = document.querySelector('#form');
@@ -21,31 +22,31 @@ import editIcon from './modules/edit.png';
 
 //Test default object for now
 let defObj = {
-    description: "Anki and shit",
+    description: "Anki, web novels and 2 ep of anime",
     priority: "normal",
     title: "Study Japanese",
     checked: false,
-    project: 'Default',
+    project: 'Today',
 }
 let defObj2 = {
     description: "Tomato egg salad, 10/10",
     priority: "low",
     title: "Eat veggies",
     checked: true,
-    project: 'Default',
+    project: 'Today',
 }
 let defObj3 = {
     description: "Get the axe, sharpen it and let Bibi know I'll be back tomorrow",
     priority: "urgent",
     title: "Kill that bear",
     checked: false,
-    project: 'Default',
+    project: 'Today',
 }
 
 //Global variables
-let arrOfTodos = [defObj, defObj2, defObj3];
-let arrOfProjects = ['Default', 'Personal', 'Family'];
-let currentProject = 'Default';
+let arrOfTodos = JSON.parse(localStorage.getItem('todosArr')) || [defObj, defObj2, defObj3];
+let arrOfProjects = JSON.parse(localStorage.getItem('projectsArr')) || ['Today', 'Personal', 'Family'];
+let currentProject = 'Today';
 let editIndex = -1;
 let checkedValue = true;
 
@@ -115,6 +116,7 @@ const todoMaker = (() => {
         let indexAsNumber = indexAsString.slice(5);
         arrOfTodos.splice(indexAsNumber, 1);
         reset();
+        localStorage.setItem('todosArr', JSON.stringify(arrOfTodos));
         renderArr();
     }
 
@@ -139,6 +141,7 @@ const todoMaker = (() => {
             ? arrOfTodos[indexAsNumber].checked = false
             : arrOfTodos[indexAsNumber].checked = true;
         reset()
+        localStorage.setItem('todosArr', JSON.stringify(arrOfTodos));
         renderArr();
     }
 
@@ -226,8 +229,10 @@ const projectMaker = (() =>{
         let name = e.target.textContent.slice(1);
         currentProject = name;
         reset();
+        localStorage.setItem('projectsArr', JSON.stringify(arrOfProjects));
         renderArr();
         todoMaker.reset()
+        localStorage.setItem('todosArr', JSON.stringify(arrOfTodos));
         todoMaker.renderArr();
     }
 
@@ -241,6 +246,7 @@ const projectMaker = (() =>{
             } else {
                 arrOfProjects.push(name);
                 reset();
+                localStorage.setItem('projectsArr', JSON.stringify(arrOfProjects));
                 renderArr();
                 newProjectInput.classList.toggle('hideMe');
                 newProjectInput.value = ''; 
@@ -257,6 +263,24 @@ const projectMaker = (() =>{
         return projectBtn;
     }
 
+    function deleteProject() {
+        if(currentProject == 'Today') {
+            alert("Sorry, you can't delete the Today project");
+        } else if(confirm('This will delete the ' + currentProject + ' project and ALL ITS TODOS, are you sure?')){
+            let index = arrOfProjects.indexOf(currentProject);
+            arrOfProjects.splice(index, 1);
+            arrOfTodos = arrOfTodos.filter(elem => elem.project !== currentProject);
+
+            currentProject = 'Today';
+            reset();
+            localStorage.setItem('projectsArr', JSON.stringify(arrOfProjects));
+            renderArr();
+            todoMaker.reset();
+            localStorage.setItem('todosArr', JSON.stringify(arrOfTodos));
+            todoMaker.renderArr();
+        }
+    }
+
     //Function to empty the projects container
     function reset() {
         projectsContainer.innerHTML = '';
@@ -267,7 +291,7 @@ const projectMaker = (() =>{
         arrOfProjects.map(elem => projectsContainer.append(strToHtml(elem)));
     }
 
-    return {newProjectBtnClick, newProjectInputEnter, renderArr, reset}
+    return {newProjectBtnClick, newProjectInputEnter,deleteProject, renderArr, reset}
 })();
 
 
@@ -298,6 +322,7 @@ form.addEventListener('submit', (e) => {
         arrOfTodos.push(todoObj);
     }
     todoMaker.reset();
+    localStorage.setItem('todosArr', JSON.stringify(arrOfTodos));
     todoMaker.renderArr();
     formModule.hideForm();
     form.reset();
@@ -308,6 +333,9 @@ newProjectBtn.addEventListener('click', projectMaker.newProjectBtnClick);
 
 //Event for the new project input
 newProjectInput.addEventListener('keydown', projectMaker.newProjectInputEnter);
+
+//Event for the delete project button
+deleteCurrentProject.addEventListener('click', projectMaker.deleteProject);
 
 
 //Run on startup

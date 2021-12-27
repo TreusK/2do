@@ -256,3 +256,20 @@ textarea {
 #newProjectBtnAndInput {
     margin-top: 20px;
 }
+
+#projectBtnsContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#deleteCurrentProject {
+    margin-top: 20px;
+    color: #FE8563;
+    border-color: #FE8563;
+}
+
+#deleteCurrentProject:hover {
+    background-color: #FE8563;
+    color: black;
+}
