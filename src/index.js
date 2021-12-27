@@ -15,9 +15,11 @@ let lowRadio = document.querySelector('#lowRadio');
 let normalRadio = document.querySelector('#normalRadio');
 let urgentRadio = document.querySelector('#urgentRadio');
 
-//Import icons
+//Import icons and css
 import deleteIcon from './modules/delete.png';
 import editIcon from './modules/edit.png';
+import './skeleton.css';
+import './style.css';
 
 
 //Test default object for now
