@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="skeleton.css">
+    <link rel="stylesheet" href="style.css">
+    <title>2do</title>
+</head>
+<body>
+    <div id='containerForm' class='hideMe'>
+        <form id='form'>
+
+            <div class='row'>
+                <label for="titleInput">Title</label>
+                <input class="u-full-width" type="text" placeholder="Do stuff" id="titleInput" autocomplete='off' required>
+            </div>
+              
+            <div class='row'>
+                <label for='descriptionInput'>Extra info</label>
+                <textarea id='descriptionInput' class="u-full-width"></textarea>
+            </div>
+            
+            <label>Priority</label>
+            <div class='row formRow'>
+                <div>
+                    <input id='lowRadio' name='priority' value='low' type="radio" checked>
+                    <label class='button' for='lowRadio'>LOW</label>
+                </div>
+                <div>
+                    <input id='normalRadio' name='priority' value='normal' type="radio">
+                    <label class='button' for='normalRadio'>NORMAL</label>
+                </div>
+                <div>
+                    <input id='urgentRadio' name='priority' value='urgent' type="radio">
+                    <label class='button' for='urgentRadio'>URGENT</label>
+                </div>                 
+            </div>
+
+            <div class='row'>
+                <input id='submitBtn' class="button-primary" type="submit" value="Submit">
+            </div>
+
+        </form>
+    </div>
+    <div class='container'>
+        <header class='row'>
+            <h1>ToDo List</h1>
+        </header>
+
+        <div class='row'>
+            <h3 class='projectsH3'>Projects</h3>
+            <div id='projectsContainer'>
+            </div>
+            <div id='projectBtnsContainer'>
+                <div id='newProjectBtnAndInput'>
+                    <button id='newProjectBtn'>New Project</button>
+                    <input type="text" id='newProjectInput' class='hideMe' placeholder='Name of Project' maxlength="17">
+                </div>
+                <button id='deleteCurrentProject'>Delete Project</button>
+            </div> 
+        </div>
+    
+        <main class='row'>
+            <div id='todosContainer'>
+
+            </div>
+            <div id='newTodoBtnDiv'>
+                <button id='newTodoBtn'>New Todo</button>
+            </div> 
+        </main>
+    </div>
+    
+
+<script src="main.js"></script>
+</body>
+</html>
