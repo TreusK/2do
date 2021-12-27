@@ -1,11 +1,11 @@
 @font-face {
     font-family: JosefinSans;
-    src: url('./../src/modules/JosefinSans.ttf');
+    src: url('../src/modules/JosefinSans.ttf');
 }
 
 @font-face {
     font-family: JosefinSans-R;
-    src: url('./../src/modules/JosefinSans-Regular.ttf');
+    src: url('../src/modules/JosefinSans-Regular.ttf');
 }
 
 body {
@@ -90,14 +90,17 @@ form input[type="radio"] {
 }
 
 form input[type="radio"]:checked + label[for='lowRadio'] {
+    user-select: none;
     background-color:#90C796;
     border-color: #2FBD74;
 }
 form input[type="radio"]:checked + label[for='normalRadio'] {
+    user-select: none;
     background-color:#FEEB99;
     border-color: #F9C253;
 }
 form input[type="radio"]:checked + label[for='urgentRadio'] {
+    user-select: none;
     background-color:#EDAA98;
     border-color: #FE8563;
 }
