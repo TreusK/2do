@@ -19,33 +19,33 @@ import deleteIcon from './modules/delete.png';
 import editIcon from './modules/edit.png';
 
 
-function sayHi() {
-    console.log('hi');
-}
-
 //Test default object for now
 let defObj = {
     description: "Anki and shit",
     priority: "normal",
     title: "Study Japanese",
     checked: false,
+    project: 'Default',
 }
 let defObj2 = {
     description: "Tomato egg salad, 10/10",
     priority: "low",
     title: "Eat veggies",
     checked: true,
+    project: 'Default',
 }
 let defObj3 = {
     description: "Get the axe, sharpen it and let Bibi know I'll be back tomorrow",
     priority: "urgent",
     title: "Kill that bear",
     checked: false,
+    project: 'Default',
 }
 
 //Global variables
 let arrOfTodos = [defObj, defObj2, defObj3];
 let arrOfProjects = ['Default', 'Personal', 'Family'];
+let currentProject = 'Default';
 let editIndex = -1;
 let checkedValue = true;
 
@@ -169,13 +169,19 @@ const todoMaker = (() => {
         todo.append(todoTop);
         todo.append(todoBottom);
 
+        todo.classList.add(obj.project);
         todo.id = 'index' + index;
+
         return todo;
     }
 
     //Function to render the arrOfTodos
     function renderArr() {
-        arrOfTodos.map((elem, index) => todosContainer.append(objToHtml(elem, index)));
+        let arrOfTodosHtml = [];
+        arrOfTodos.map((elem, index) => arrOfTodosHtml.push(objToHtml(elem, index)));
+
+        let filteredArr = arrOfTodosHtml.filter(elem => elem.classList[1] == currentProject);
+        filteredArr.map(elem => todosContainer.append(elem));
     }
 
     return {reset, renderArr}
@@ -189,7 +195,8 @@ const formModule = (() => {
         let description = formElements[1].value;
         let priority = checkedRadio.value;
         let checked = false;
-        return {title, description, priority, checked}
+        let project = currentProject;
+        return {title, description, priority, checked, project}
     }
 
     //Function to hide the form
@@ -213,6 +220,17 @@ const projectMaker = (() =>{
         newProjectInput.focus();
     }
 
+    //Event function for the project button on click
+    function projectBtnClick(e) {
+        let parent = e.target;
+        let name = e.target.textContent.slice(1);
+        currentProject = name;
+        reset();
+        renderArr();
+        todoMaker.reset()
+        todoMaker.renderArr();
+    }
+
     //Event function for the new project input on enter
     function newProjectInputEnter(e) {
         let key = e.key;
@@ -231,8 +249,11 @@ const projectMaker = (() =>{
     }
 
     //Function to take a string and return a project element
-    function strToHtml(str, index) {
-        let projectBtn = elemMaker('div', 'projectBtn', sayHi, str);
+    function strToHtml(str) {
+        let projectBtn = elemMaker('div', 'projectBtn', projectBtnClick, str);
+        if(str == currentProject) {
+            projectBtn.classList.add('projectBtnSelected');
+        };
         return projectBtn;
     }
 
@@ -288,6 +309,8 @@ newProjectBtn.addEventListener('click', projectMaker.newProjectBtnClick);
 //Event for the new project input
 newProjectInput.addEventListener('keydown', projectMaker.newProjectInputEnter);
 
+
+//Run on startup
 todoMaker.renderArr();
 projectMaker.renderArr();
 

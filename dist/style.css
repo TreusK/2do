@@ -208,25 +208,30 @@ textarea {
 
 #projectsContainer {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .projectBtn {
     position: relative;
     user-select: none;
     font-size: 1.30em;
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
     margin-left: 0;
     margin-right: 20px;
     border-radius: 3px;
     padding: 0 5px;
 }
 
+.projectBtnSelected {
+    color: rgb(0, 140, 255);
+}
+
 .projectBtn:hover {
     color: rgb(0, 140, 255);
 }
 
-.projectBtn:before {
+.projectBtn::before {
     content : "";
     position: absolute;
     left    : 25%;
@@ -246,4 +251,8 @@ textarea {
 
 #newProjectInput {
     margin-bottom: 9px;
+}
+
+#newProjectBtnAndInput {
+    margin-top: 20px;
 }
